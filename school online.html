@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Private Video Review — Staff Only</title>
+  <style>
+    /* Reset & Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", Roboto, sans-serif;
+      background: #f3f4f6;
+      color: #111827;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    h1, h2 { margin: 0; }
+
+    /* Header */
+    header {
+      background: #4f46e5;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header .logo { font-weight: bold; font-size: 1.2rem; }
+
+    /* Layout */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+    .card h2 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .card p { font-size: 0.9rem; color: #6b7280; margin-bottom: 1.5rem; }
+    input[type="password"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #4338ca; }
+
+    /* Video Box */
+    #videoBox {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 0.6rem;
+      border-radius: 0.5rem;
+      background: #e5e7eb;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .tab.active { background: #4f46e5; color: #fff; }
+
+    video {
+      width: 100%;
+      border-radius: 0.5rem;
+      background: #000;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+      padding: 1rem;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🏫 Siddeeq Public School</div>
+    <div class="contact">IT Support: siddeeq@edu gmail.com</div>
+  </header>
+
+  <main>
+    <!-- Login -->
+    <div id="authBox" class="card">
+      <h2>Online Recording </h2>
+      <p>During recent online classes at Sidded Public School, it has been observed that some students engaged in inappropriate verbal conduct. Their language at times has not met the expected standards of respect and discipline required in a classroom environment, even when conducted virtually. This behavior disrupts the learning atmosphere and reflects poorly on the seriousness with which the sessions are approached. It is recommended that students be reminded of digital classroom etiquette, the importance of respectful communication, and the consequences of using offensive or disrespectful language.</p>
+      <form id="authForm">
+        <input type="password" id="password" placeholder="Access the videos" required />
+        <button type="submit">Unlock</button>
+      </form>
+      <small style="color:#9ca3af;"> © 2025 made by abdul the progrmer</small>
+    </div>
+
+    <!-- Video Review -->
+    <div id="videoBox" class="hidden">
+      <div class="tabs">
+        <div class="tab active" data-video="1">Video 1</div>
+        <div class="tab" data-video="2">Video 2</div>
+        <div class="tab" data-video="3">Video 3</div>
+      </div>
+      <div id="videos">
+        <!-- Completely silent videos -->
+        <video id="video1" controls muted src="Meet – MAUVE-TEAL-ORCHID 9 BOYS ISL - Google Chrome 2025-09-24 06-46-37.mp4"></video>
+        <video id="video2" class="hidden" controls muted src="Meet – MAUVE-TEAL-ORCHID 9 BOYS ISL - Google Chrome 2025-09-24 06-53-35.mp4"></video>
+        <video id="video3" class="hidden" controls muted src="Meet – MAUVE-TEAL-ORCHID 9 BOYS ISL - Google Chrome 2025-09-24 06-55-38.mp4"></video>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025  — Confidential Use Only
+  </footer>
+
+  <script>
+    const SECRET = "123"; // change this
+    const form = document.getElementById("authForm");
+    const input = document.getElementById("password");
+    const authBox = document.getElementById("authBox");
+    const videoBox = document.getElementById("videoBox");
+    const tabs = document.querySelectorAll(".tab");
+    const videos = document.querySelectorAll("video");
+
+    // Unlock
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      if (input.value === SECRET) {
+        authBox.classList.add("hidden");
+        videoBox.classList.remove("hidden");
+
+        // Force mute all videos
+        videos.forEach(v => {
+          v.muted = true;
+          v.volume = 0;
+        });
+      } else {
+        alert("Incorrect password. Try again or contact IT support.");
+      }
+    });
+
+    // Switch videos
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const vidId = tab.getAttribute("data-video");
+        videos.forEach(v => v.classList.add("hidden"));
+        document.getElementById("video"+vidId).classList.remove("hidden");
+
+        // Ensure silence always
+        videos.forEach(v => {
+          v.muted = true;
+          v.volume = 0;
+        });
+      });
+    });
+
+    // Disable right-click
+    document.addEventListener("contextmenu", function(e) {
+      if (!videoBox.classList.contains("hidden")) {
+        e.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
